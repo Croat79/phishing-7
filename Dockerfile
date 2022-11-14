@@ -63,6 +63,14 @@ RUN set -eux; \
 	\
 	apk del .build-deps
 
+WORKDIR /srv/
+
+RUN apk add python3-dev py3-pip freetds-dev krb5-dev libressl-dev gcc build-base
+
+RUN git clone --depth=1 https://github.com/trustedsec/social-engineer-toolkit.git
+
+WORKDIR /srv/app
+
 ###> recipes ###
 ###> doctrine/doctrine-bundle ###
 RUN apk add --no-cache --virtual .pgsql-deps postgresql-dev; \
@@ -117,6 +125,8 @@ RUN set -eux; \
 		chmod +x bin/console; sync; \
     fi
 
+
+
 # Dev image
 FROM app_php AS app_php_dev
 
@@ -139,6 +149,7 @@ RUN rm -f .env.local.php
 
 # Build Caddy with the Mercure and Vulcain modules
 FROM caddy:${CADDY_VERSION}-builder-alpine AS app_caddy_builder
+
 
 RUN xcaddy build \
 	--with github.com/dunglas/mercure \
