@@ -17,7 +17,7 @@ docker compose exec php /bin/sh
 ````
 cd ../social-engineer-toolkit/
 pip3 install -r requirements.txt
-pytho3 setup.py
+python3 setup.py
 ````
 
 ## 5. Lauch setoolkit and accept the agrements :
